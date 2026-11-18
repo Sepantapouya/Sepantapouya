@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="64" viewBox="0 0 1200 64" role="img" aria-label="Selected work">
+<title>Selected work</title>
+<style>
+  .sans{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif} .mono{font-family:ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace}
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+<text x="2" y="40" class="mono" font-size="14" fill="#F2457F">01</text>
+<text x="40" y="40" class="mono" font-size="14" letter-spacing="2.5" fill="#8B95A3">SELECTED WORK</text>
+<line x1="200" x2="1200" y1="35.5" y2="35.5" stroke="#222A33"/>
+</svg>
