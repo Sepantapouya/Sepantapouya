@@ -26,6 +26,7 @@ THEMES = {
 
 SANS = "-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
 MONO = "ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace"
+FA = "'Vazirmatn', Tahoma, sans-serif"
 MONO_W = 0.602  # advance width of a monospace glyph, in em
 
 
@@ -42,11 +43,10 @@ def fetch_json(url):
 def load_stats():
     path = os.path.join(OUT, "stats.json")
     stats = json.load(open(path)) if os.path.exists(path) else {
-        "kashi_stars": 42, "npm_month": 72000, "exportease_stars": 2, "toad_stars": 1}
+        "kashi_stars": 42, "npm_month": 72000, "exportease_stars": 2}
     try:
         stats["kashi_stars"] = fetch_json(f"https://api.github.com/repos/{USER}/Kashi")["stargazers_count"]
         stats["exportease_stars"] = fetch_json(f"https://api.github.com/repos/{USER}/Exportease")["stargazers_count"]
-        stats["toad_stars"] = fetch_json(f"https://api.github.com/repos/{USER}/Toad-redesigned")["stargazers_count"]
     except Exception as e:
         print("github fetch failed, keeping cached:", e)
     try:
@@ -70,6 +70,15 @@ def compact(n):
         v = n / 1000
         return (f"{v:.1f}".rstrip("0").rstrip(".")) + "k"
     return str(n)
+
+
+def fa_font_css():
+    """@font-face with the embedded Vazirmatn subset (see scripts/subset_font.py)."""
+    import base64
+    data = base64.b64encode(open(os.path.join(OUT, "vazirmatn-subset.woff"), "rb").read()).decode()
+    return ("@font-face{font-family:'Vazirmatn';font-weight:100 900;"
+            f"src:url(data:font/woff;base64,{data}) format('woff')}}"
+            f".fa{{font-family:{FA}}}")
 
 
 # ------------------------------------------------------------------ helpers
@@ -249,20 +258,20 @@ def kashi_card(t, stats):
     <rect x="1" y="26" width="434" height="15" fill="{t['surface2']}"/>
     <line x1="1" x2="435" y1="41" y2="41" stroke="{t['line']}"/>
     <circle cx="410" cy="21" r="5" fill="{t['line2']}"/><circle cx="392" cy="21" r="5" fill="{t['line2']}"/><circle cx="374" cy="21" r="5" fill="{t['line2']}"/>
-    <text x="408" y="82" text-anchor="end" class="sans" font-size="20" font-weight="700" fill="{t['text']}">سلام، خوش آمدید</text>
-    <text x="408" y="108" text-anchor="end" class="sans" font-size="13" fill="{t['muted']}">دیزاین‌سیستم فارسی، راست‌به‌چپ از پایه</text>
+    <text x="408" y="82" text-anchor="start" class="fa" direction="rtl" font-size="20" font-weight="700" fill="{t['text']}">سلام، خوش آمدید</text>
+    <text x="408" y="108" text-anchor="start" class="fa" direction="rtl" font-size="13" fill="{t['muted']}">دیزاین‌سیستم فارسی، راست‌به‌چپ از پایه</text>
     <rect x="148" y="130" width="260" height="40" rx="10" fill="{t['surface']}" stroke="{t['accent']}" stroke-width="1.5"/>
-    <text x="394" y="155" text-anchor="end" class="sans" font-size="13" fill="{t['faint']}">کد ملی</text>
-    <text x="164" y="155" class="mono" font-size="13" fill="{t['text']}">۰۰۱۲۳۴۵۶۷۸</text>
+    <text x="394" y="155" text-anchor="start" class="fa" direction="rtl" font-size="13" fill="{t['faint']}">کد ملی</text>
+    <text x="164" y="155" class="fa" font-size="14" letter-spacing="1" fill="{t['text']}">۰۰۱۲۳۴۵۶۷۸</text>
     <rect x="28" y="130" width="104" height="40" rx="10" fill="{t['accent']}"/>
-    <text x="80" y="155" text-anchor="middle" class="sans" font-size="14" font-weight="600" fill="#FFFFFF">ادامه</text>
+    <text x="80" y="155" text-anchor="middle" class="fa" direction="rtl" font-size="14" font-weight="600" fill="#FFFFFF">ادامه</text>
     <rect x="28" y="190" width="380" height="68" rx="12" fill="{t['surface']}" stroke="{t['line']}"/>
     <rect class="sw" x="44" y="214" width="40" height="22" rx="11" fill="{t['accent']}"/>
     <circle class="knob" cx="73" cy="225" r="8" fill="#FFFFFF"/>
-    <text x="392" y="220" text-anchor="end" class="sans" font-size="14" font-weight="600" fill="{t['text']}">حالت تیره</text>
-    <text x="392" y="242" text-anchor="end" class="sans" font-size="12" fill="{t['muted']}">۱۴۰۵/۰۸/۲۷ · ۱۳٬۰۰۰ آیکون</text>
+    <text x="392" y="220" text-anchor="start" class="fa" direction="rtl" font-size="14" font-weight="600" fill="{t['text']}">حالت تیره</text>
+    <text x="392" y="242" text-anchor="start" class="fa" direction="rtl" font-size="12" fill="{t['muted']}">۱۴۰۵/۰۸/۲۷ · ۱۳٬۰۰۰ آیکون</text>
   </g>"""
-    style = """<style>
+    style = "<style>" + fa_font_css() + "</style>" + """<style>
   .knob{animation:knob 4s cubic-bezier(.65,0,.35,1) infinite}
   @keyframes knob{0%,40%{transform:translateX(0)}50%,90%{transform:translateX(-18px)}100%{transform:translateX(0)}}
   .sw{animation:sw 4s cubic-bezier(.65,0,.35,1) infinite}
@@ -281,7 +290,7 @@ def kashi_card(t, stats):
 {frame(W, H, t, 24)}
 <rect x="1" y="1" width="{W-2}" height="{H-2}" rx="23" fill="url(#kg)"/>
 <g transform="translate(56 56)">{tile(0, 0, 44, 'quarter', 0, t['accent'], t)}</g>
-<text x="116" y="78" class="sans" font-size="26" font-weight="700" letter-spacing="-.6" fill="{t['text']}">Kashi <tspan fill="{t['muted']}" font-weight="500">کاشی</tspan></text>
+<text x="116" y="78" class="sans" font-size="26" font-weight="700" letter-spacing="-.6" fill="{t['text']}">Kashi <tspan class="fa" fill="{t['muted']}" font-weight="500">کاشی</tspan></text>
 <text x="116" y="100" class="mono" font-size="12.5" fill="{t['accent_txt']}">FEATURED · OPEN SOURCE · MIT</text>
 <text x="56" y="152" class="sans" font-size="19" font-weight="500" fill="{t['text']}">An open-source Persian design system.</text>
 <text x="56" y="180" class="sans" font-size="16" fill="{t['muted']}">RTL-first, dark-first and accessible — React, Web Components,</text>
@@ -293,12 +302,13 @@ def kashi_card(t, stats):
     return svg(W, H, body, t, f"Kashi — open-source Persian design system. {stats['kashi_stars']} stars, {stats['npm_month']} npm installs a month")
 
 
-def small_card(t, name, kicker, lines, tags, foot, accent, glyph, title):
-    W, H = 588, 310
+def small_card(t, name, kicker, lines, tags, foot, accent, glyph, title, W=588):
+    H = 310
     tg, _ = chips_row(40, 210, tags, t, size=11.5, h=24, pad=9)
     ls = "".join(f'<text x="40" y="{142 + i*24}" class="sans" font-size="15.5" fill="{t["muted"] if i else t["text"]}">{escape(l)}</text>'
                  for i, l in enumerate(lines))
-    body = f"""{frame(W, H, t, 22)}
+    deco = tile_field(W - 440, 36, 6, 3, 52, 10, t, seed=5, animate=False) if W > 600 else ""
+    body = f"""{frame(W, H, t, 22)}{deco}
 <g transform="translate(40 40)">{tile(0, 0, 40, glyph[0], glyph[1], accent, t)}</g>
 <text x="96" y="62" class="sans" font-size="22" font-weight="700" letter-spacing="-.5" fill="{t['text']}">{escape(name)}</text>
 <text x="96" y="82" class="mono" font-size="11.5" letter-spacing=".5" fill="{t['accent_txt'] if accent == t['accent'] else t['muted']}">{escape(kicker)}</text>
@@ -359,6 +369,133 @@ def footer(t, stats):
     return svg(W, H, body, t, "Footer")
 
 
+
+def wrap(text, size, width):
+    words, lines, cur = text.split(), [], ""
+    for w in words:
+        test = (cur + " " + w).strip()
+        if text_width(test, size) > width and cur:
+            lines.append(cur)
+            cur = w
+        else:
+            cur = test
+    return lines + ([cur] if cur else [])
+
+
+def experience(t):
+    W, H = 1200, 410
+    roles = [("NOW", "Senior Product Designer", "Partnerz — Shopify apps for restock & chat"),
+             ("ONGOING", "UX mentor & instructor", "400+ hours of 1:1 sessions with designers"),
+             ("ONGOING", "Published contributor", "UX Collective on Medium"),
+             ("BEFORE", "Head of Design", "Pattern"),
+             ("BEFORE", "Founding Designer", "Soniva.ai — AI & voice")]
+    out = [frame(W, H, t, 22)]
+    out.append(f'<line x1="61.5" x2="61.5" y1="64" y2="{56 + 4*68}" stroke="{t["line2"]}" stroke-dasharray="3 5"/>')
+    for i, (when, role, where) in enumerate(roles):
+        y = 56 + i * 68
+        now = i == 0
+        out.append(f'<circle cx="62" cy="{y+8}" r="{7 if now else 5}" fill="{t["accent"] if now else t["surface"]}" stroke="{t["accent"] if now else t["line2"]}" stroke-width="2"/>')
+        if now:
+            out.append(f'<circle class="pulse" cx="62" cy="{y+8}" r="7" fill="{t["accent"]}"/>')
+        out.append(f'<text x="88" y="{y+4}" class="mono" font-size="11" letter-spacing="1.2" fill="{t["accent_txt"] if now else t["faint"]}">{when}</text>'
+                   f'<text x="88" y="{y+26}" class="sans" font-size="18" font-weight="600" letter-spacing="-.3" fill="{t["text"]}">{escape(role)}</text>'
+                   f'<text x="88" y="{y+47}" class="sans" font-size="14" fill="{t["muted"]}">{escape(where)}</text>')
+    # right column: industries + reach
+    x0 = 620
+    out.append(f'<line x1="{x0-36}" x2="{x0-36}" y1="48" y2="{H-48}" stroke="{t["line"]}"/>')
+    out.append(f'<text x="{x0}" y="66" class="mono" font-size="12" letter-spacing="2" fill="{t["muted"]}">INDUSTRIES</text>')
+    inds = ["Shopify & e-commerce", "Fintech & payments", "Insurance", "Legal & RegTech",
+            "Web3 & crypto", "AI & voice", "SaaS & dashboards", "Marketplaces"]
+    x, y = x0, 84
+    for it in inds:
+        c, w = chip(x, y, it, t, size=12.5, h=30, pad=13)
+        if x + w > W - 48:
+            x, y = x0, y + 40
+            c, w = chip(x, y, it, t, size=12.5, h=30, pad=13)
+        out.append(c)
+        x += w + 8
+    y += 84
+    out.append(f'<text x="{x0}" y="{y}" class="mono" font-size="12" letter-spacing="2" fill="{t["muted"]}">REACH</text>'
+               f'<text x="{x0}" y="{y+52}" class="sans" font-size="48" font-weight="700" letter-spacing="-2" fill="{t["text"]}">16</text>'
+               f'<text x="{x0+66}" y="{y+32}" class="sans" font-size="16" font-weight="600" fill="{t["text"]}">countries</text>'
+               f'<text x="{x0+66}" y="{y+52}" class="sans" font-size="14" fill="{t["muted"]}">US · Canada · UK · Germany · UAE · NZ …</text>')
+    style = """<style>.pulse{animation:pulse 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(2.8)}}</style>"""
+    return svg(W, H, style + "".join(out), t, "Experience: Senior Product Designer at Partnerz, UX mentor, UX Collective contributor, ex-Head of Design at Pattern, ex-Founding Designer at Soniva.ai. Clients in 16 countries.")
+
+
+def process(t):
+    W, H = 1200, 300
+    steps = [("Understand", "quarter", 0, "Research, interviews and data to find the real problem — not the loudest one."),
+             ("Frame", "half", 0, "Flows, IA and a sharp problem statement the whole team agrees on."),
+             ("Design", "circle", 0, "Prototypes tested with real users, built on a solid design system."),
+             ("Ship", "tri", 90, "Specs, tokens — often the code itself. Then measure and iterate.")]
+    cw, gap = 288, 16
+    out = []
+    track_y = 64
+    out.append(f'<line x1="{cw/2}" x2="{3*(cw+gap)+cw/2}" y1="{track_y}" y2="{track_y}" stroke="{t["line2"]}"/>')
+    out.append(f'<circle class="travel" cx="{cw/2}" cy="{track_y}" r="4" fill="{t["accent"]}"/>')
+    for i, (name, kind, rot, desc) in enumerate(steps):
+        x = i * (cw + gap)
+        out.append(f'<rect x="{x+.5}" y="96.5" width="{cw-1}" height="{H-120}" rx="18" fill="{t["surface"]}" stroke="{t["line"]}"/>')
+        out.append(f'<g transform="translate({x+cw/2-22} {track_y-22})">' + tile(0, 0, 44, kind, rot, t["accent"] if i in (0, 3) else t["tint"], t) + "</g>")
+        out.append(f'<text x="{x+24}" y="136" class="mono" font-size="12" fill="{t["accent_txt"]}">0{i+1}</text>'
+                   f'<text x="{x+24}" y="166" class="sans" font-size="21" font-weight="650" letter-spacing="-.5" fill="{t["text"]}">{name}</text>')
+        for j, line in enumerate(wrap(desc, 14.5, cw - 48)):
+            out.append(f'<text x="{x+24}" y="{198 + j*22}" class="sans" font-size="14.5" fill="{t["muted"]}">{escape(line)}</text>')
+    dist = 3 * (cw + gap)
+    style = f"""<style>.travel{{animation:travel 6s cubic-bezier(.65,0,.35,1) infinite}}
+@keyframes travel{{0%,8%{{transform:translateX(0)}}25%,33%{{transform:translateX({dist/3}px)}}50%,58%{{transform:translateX({2*dist/3}px)}}75%,92%{{transform:translateX({dist}px)}}100%{{transform:translateX(0)}}}}</style>"""
+    return svg(W, H, style + "".join(out), t, "How I work: Understand, Frame, Design, Ship")
+
+
+def testimonials(t):
+    W, H = 1200, 340
+    quotes = [("He quickly and effectively identifies user needs and pain points — highly motivated, results-oriented, and an excellent team member.",
+               "Fatemeh Golivari", "Product Designer"),
+              ("An excellent communicator and collaborator who always strives to understand stakeholders' goals — and delivers solutions that exceed expectations.",
+               "Tigran Safaryan", "Senior Product Owner & AI Product Leader"),
+              ("Highly creative and an excellent problem solver. He sets very high standards for himself, and his design quality is unparalleled.",
+               "Seyed Mohammad Keramati", "Ex-PM @ Partnerz, Tapsi & Cafebazaar")]
+    cw, gap = 384, 24
+    out = []
+    for i, (q, name, role) in enumerate(quotes):
+        x = i * (cw + gap)
+        out.append(f'<rect x="{x+.5}" y=".5" width="{cw-1}" height="{H-1}" rx="20" fill="{t["surface"]}" stroke="{t["line"]}"/>')
+        out.append(f'<text x="{x+30}" y="76" class="sans" font-size="64" font-weight="700" fill="{t["accent"]}">“</text>')
+        for j, line in enumerate(wrap(q, 16.5, cw - 60)):
+            out.append(f'<text x="{x+30}" y="{104 + j*26}" class="sans" font-size="16.5" fill="{t["text"]}">{escape(line)}</text>')
+        initials = "".join(p[0] for p in name.split()[:2] if p[0].isalpha())[:2]
+        out.append(f'<line x1="{x+30}" x2="{x+cw-30}" y1="{H-86}" y2="{H-86}" stroke="{t["line"]}"/>'
+                   f'<circle cx="{x+50}" cy="{H-44}" r="20" fill="{t["surface2"]}" stroke="{t["line2"]}"/>'
+                   f'<text x="{x+50}" y="{H-39.5}" text-anchor="middle" class="sans" font-size="13" font-weight="600" fill="{t["muted"]}">{initials}</text>'
+                   f'<text x="{x+82}" y="{H-49}" class="sans" font-size="15" font-weight="600" fill="{t["text"]}">{escape(name)}</text>'
+                   f'<text x="{x+82}" y="{H-29}" class="sans" font-size="12.5" fill="{t["muted"]}">{escape(role)}</text>')
+    return svg(W, H, "".join(out), t, "Recommendations from Fatemeh Golivari, Tigran Safaryan and Seyed Mohammad Keramati")
+
+
+def cta(t):
+    W, H = 1200, 260
+    body = f"""<defs>
+  <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{t['accent']}"/><stop offset="1" stop-color="#8E0D3C"/></linearGradient>
+  <pattern id="cgrid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#FFFFFF" stroke-opacity=".08"/></pattern>
+  <clipPath id="cc"><rect width="{W}" height="{H}" rx="24"/></clipPath>
+</defs>
+<g clip-path="url(#cc)">
+  <rect width="{W}" height="{H}" fill="url(#cg)"/>
+  <rect width="{W}" height="{H}" fill="url(#cgrid)"/>
+  <circle cx="{W-120}" cy="40" r="170" fill="none" stroke="#FFFFFF" stroke-opacity=".12" stroke-width="40"/>
+  <circle cx="{W-120}" cy="40" r="70" fill="#FFFFFF" fill-opacity=".10"/>
+</g>
+<text x="56" y="72" class="mono" font-size="12.5" letter-spacing="2" fill="#FFFFFF" fill-opacity=".75">GOT A PROJECT IN MIND?</text>
+<text x="54" y="132" class="sans" font-size="46" font-weight="700" letter-spacing="-1.8" fill="#FFFFFF">Let’s build something people love.</text>
+<rect x="56" y="168" width="184" height="46" rx="23" fill="#FFFFFF"/>
+<text x="80" y="196.5" class="sans" font-size="15" font-weight="600" fill="{t['accent']}">Start a project  →</text>
+<rect x="252.5" y="168.5" width="207" height="45" rx="22.5" fill="none" stroke="#FFFFFF" stroke-opacity=".55"/>
+<text x="276" y="196.5" class="sans" font-size="15" font-weight="600" fill="#FFFFFF">Book a mentoring call</text>"""
+    return svg(W, H, body, t, "Got a project in mind? Let's build something people love — start a project or book a mentoring call")
+
+
 # ------------------------------------------------------------------ main
 def main():
     stats = load_stats()
@@ -372,23 +509,25 @@ def main():
             f"toolkit-{mode}.svg": toolkit(t),
             f"footer-{mode}.svg": footer(t, stats),
             f"s-work-{mode}.svg": section(t, "Selected work", "01"),
-            f"s-toolkit-{mode}.svg": section(t, "Toolkit", "02"),
-            f"s-elsewhere-{mode}.svg": section(t, "Elsewhere", "03"),
+            f"s-experience-{mode}.svg": section(t, "Experience", "02"),
+            f"s-process-{mode}.svg": section(t, "How I work", "03"),
+            f"s-toolkit-{mode}.svg": section(t, "Toolkit", "04"),
+            f"s-words-{mode}.svg": section(t, "Kind words", "05"),
+            f"s-elsewhere-{mode}.svg": section(t, "Elsewhere", "06"),
+            f"experience-{mode}.svg": experience(t),
+            f"process-{mode}.svg": process(t),
+            f"words-{mode}.svg": testimonials(t),
+            f"cta-{mode}.svg": cta(t),
             f"exportease-{mode}.svg": small_card(
                 t, "Exportease", "FIGMA PLUGIN",
                 ["Design tokens → clean code files.", "Export Figma variables to CSS, JS & Tailwind,", "organised by collection."],
                 ["Figma API", "TypeScript", "Tokens"], f"★ {stats['exportease_stars']}  ·  github.com/{USER}/Exportease",
                 t["tint"], ("half", 0), "Exportease — Figma plugin that exports design tokens to code"),
-            f"toad-{mode}.svg": small_card(
-                t, "Toad, redesigned", "CONCEPT · LIVE DEMO",
-                ["A ground-up UX redesign, shipped as code.", "From audit and flows to a working,", "deployed front end."],
-                ["UX audit", "TypeScript", "Vercel"], "toad-redesigned.vercel.app",
-                t["ink"], ("circle", 0), "Toad redesigned — UX redesign concept with live demo"),
             f"ux-{mode}.svg": small_card(
                 t, "Writing & mentoring", "UX COLLECTIVE · SEPICAST",
                 ["Published contributor at UX Collective,", "host of SepiCast (a Persian design podcast)", "and 400+ hours of 1:1 mentoring."],
                 ["Medium", "Podcast", "Mentoring"], "sepantapouya.medium.com",
-                t["accent"], ("ring", 0), "Writing and mentoring — UX Collective, SepiCast podcast, mentoring"),
+                t["accent"], ("ring", 0), "Writing and mentoring — UX Collective, SepiCast podcast, mentoring", W=1200),
             f"site-{mode}.svg": small_card(
                 t, "Case studies", "PORTFOLIO",
                 ["Shopify apps, B2B dashboards and", "consumer products — the full stories,", "from problem to shipped result."],

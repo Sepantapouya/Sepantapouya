@@ -14,11 +14,26 @@
 
 <p align="center">
   <a href="https://github.com/Sepantapouya/Exportease"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/exportease-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/exportease-light.svg"><img alt="Exportease — Figma plugin" src="assets/exportease-light.svg" width="49%"></picture></a>
-  <a href="https://toad-redesigned.vercel.app"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/toad-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/toad-light.svg"><img alt="Toad redesigned" src="assets/toad-light.svg" width="49%"></picture></a>
+  <a href="https://www.sepantapouya.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/site-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/site-light.svg"><img alt="Case studies" src="assets/site-light.svg" width="49%"></picture></a>
 </p>
 <p align="center">
-  <a href="https://www.sepantapouya.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/site-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/site-light.svg"><img alt="Case studies" src="assets/site-light.svg" width="49%"></picture></a>
-  <a href="https://sepantapouya.medium.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/ux-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/ux-light.svg"><img alt="Writing and mentoring" src="assets/ux-light.svg" width="49%"></picture></a>
+  <a href="https://sepantapouya.medium.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/ux-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/ux-light.svg"><img alt="Writing and mentoring" src="assets/ux-light.svg" width="100%"></picture></a>
+</p>
+
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/s-experience-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/s-experience-light.svg"><img alt="Experience" src="assets/s-experience-light.svg" width="100%"></picture>
+</p>
+
+<p align="center">
+  <a href="https://www.linkedin.com/in/sepantapouya/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/experience-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/experience-light.svg"><img alt="Senior Product Designer at Partnerz, UX mentor, UX Collective contributor, ex-Head of Design at Pattern, ex-Founding Designer at Soniva.ai" src="assets/experience-light.svg" width="100%"></picture></a>
+</p>
+
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/s-process-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/s-process-light.svg"><img alt="How I work" src="assets/s-process-light.svg" width="100%"></picture>
+</p>
+
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/process-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/process-light.svg"><img alt="Understand, Frame, Design, Ship" src="assets/process-light.svg" width="100%"></picture>
 </p>
 
 <p align="center">
@@ -27,6 +42,18 @@
 
 <p align="center">
   <picture><source media="(prefers-color-scheme: dark)" srcset="assets/toolkit-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/toolkit-light.svg"><img alt="Design: Figma, design systems, prototyping, UX research. Build: React, TypeScript, Next.js, Tailwind, Web Components. AI: Claude Code, MCP, n8n." src="assets/toolkit-light.svg" width="100%"></picture>
+</p>
+
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/s-words-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/s-words-light.svg"><img alt="Kind words" src="assets/s-words-light.svg" width="100%"></picture>
+</p>
+
+<p align="center">
+  <a href="https://www.linkedin.com/in/sepantapouya/details/recommendations/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/words-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/words-light.svg"><img alt="Recommendations from people I've worked with" src="assets/words-light.svg" width="100%"></picture></a>
+</p>
+
+<p align="center">
+  <a href="https://www.sepantapouya.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/cta-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/cta-light.svg"><img alt="Got a project in mind? Let's build something people love." src="assets/cta-light.svg" width="100%"></picture></a>
 </p>
 
 <p align="center">

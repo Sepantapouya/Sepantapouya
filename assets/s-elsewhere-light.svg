@@ -4,7 +4,7 @@
   .sans{font-family:-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif} .mono{font-family:ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace}
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 </style>
-<text x="2" y="40" class="mono" font-size="14" fill="#D2145A">03</text>
+<text x="2" y="40" class="mono" font-size="14" fill="#D2145A">06</text>
 <text x="40" y="40" class="mono" font-size="14" letter-spacing="2.5" fill="#5B6472">ELSEWHERE</text>
 <line x1="156" x2="1200" y1="35.5" y2="35.5" stroke="#E4E7EC"/>
 </svg>
